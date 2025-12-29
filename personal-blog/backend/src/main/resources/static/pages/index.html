@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客 - 首页</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">个人博客</a>
+            <ul class="navbar-nav">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="#" onclick="showCategories()">分类</a></li>
+                <li><a href="#" onclick="showTags()">标签</a></li>
+                <li><a href="login.html" id="loginLink">登录</a></li>
+                <li><a href="#" id="usernameDisplay" style="display:none;"></a></li>
+                <li><a href="#" onclick="logout()" id="logoutLink" style="display:none;">退出</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="main-content">
+            <!-- 文章列表 -->
+            <div class="content-area">
+                <div id="messageContainer"></div>
+                <div id="articlesContainer">
+                    <div class="loading">加载中...</div>
+                </div>
+                <div id="paginationContainer" class="pagination"></div>
+            </div>
+
+            <!-- 侧边栏 -->
+            <aside class="sidebar">
+                <!-- 搜索框 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">搜索</h3>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" class="search-input" placeholder="搜索文章...">
+                        <button onclick="searchArticles()" class="search-button">搜索</button>
+                    </div>
+                </div>
+
+                <!-- 分类列表 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">分类</h3>
+                    <ul id="categoriesList" class="category-list">
+                        <div class="loading">加载中...</div>
+                    </ul>
+                </div>
+
+                <!-- 标签云 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">标签云</h3>
+                    <div id="tagsCloud" class="tag-cloud">
+                        <div class="loading">加载中...</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            loadArticles(1);
+            loadCategories();
+            loadTags();
+        });
+
+        // 显示分类文章
+        function showCategories() {
+            const categoriesList = document.getElementById('categoriesList');
+            categoriesList.style.display = categoriesList.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // 显示标签云
+        function showTags() {
+            const tagsCloud = document.getElementById('tagsCloud');
+            tagsCloud.style.display = tagsCloud.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

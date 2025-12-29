@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.TagMapper">
+    
+    <resultMap id="BaseResultMap" type="com.blog.entity.Tag">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT id, name, created_at
+        FROM tags
+        ORDER BY id
+    </select>
+    
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT id, name, created_at
+        FROM tags
+        WHERE id = #{id}
+    </select>
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tags (name)
+        VALUES (#{name})
+    </insert>
+    
+    <update id="update">
+        UPDATE tags
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteById">
+        DELETE FROM tags WHERE id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详情 - 个人博客</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">个人博客</a>
+            <ul class="navbar-nav">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="#" onclick="showCategories()">分类</a></li>
+                <li><a href="#" onclick="showTags()">标签</a></li>
+                <li><a href="login.html" id="loginLink">登录</a></li>
+                <li><a href="#" id="usernameDisplay" style="display:none;"></a></li>
+                <li><a href="#" onclick="logout()" id="logoutLink" style="display:none;">退出</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div id="messageContainer"></div>
+        
+        <!-- 文章详情 -->
+        <div id="articleContainer">
+            <div class="loading">加载中...</div>
+        </div>
+
+        <!-- 评论区 -->
+        <div id="commentsSection" class="comments-section" style="display:none;">
+            <h3>评论区</h3>
+            
+            <!-- 评论表单 -->
+            <div class="comment-form">
+                <div class="form-group">
+                    <textarea id="commentContent" class="form-control textarea" placeholder="写下你的评论..."></textarea>
+                </div>
+                <button onclick="submitComment()" class="btn btn-primary">发表评论</button>
+            </div>
+            
+            <!-- 评论列表 -->
+            <div id="commentsList">
+                <div class="loading">加载评论中...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/article.js"></script>
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            loadArticle();
+        });
+    </script>
+</body>
+</html>

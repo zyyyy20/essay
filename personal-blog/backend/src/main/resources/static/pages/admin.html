@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 个人博客</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- 管理后台导航栏 -->
+    <header class="admin-header">
+        <div class="container">
+            <nav>
+                <ul class="admin-nav">
+                    <li><a href="#" onclick="showSection('articles')" class="active">文章管理</a></li>
+                    <li><a href="#" onclick="showSection('categories')">分类管理</a></li>
+                    <li><a href="#" onclick="showSection('tags')">标签管理</a></li>
+                    <li><a href="index.html">返回前台</a></li>
+                    <li><a href="#" onclick="logout()">退出登录</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div id="messageContainer"></div>
+        
+        <!-- 文章管理 -->
+        <div id="articlesSection" class="admin-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>文章管理</h2>
+                <button onclick="showCreateArticleForm()" class="btn btn-primary">新建文章</button>
+            </div>
+            
+            <div id="articlesList">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+
+        <!-- 分类管理 -->
+        <div id="categoriesSection" class="admin-content" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>分类管理</h2>
+                <button onclick="showCreateCategoryForm()" class="btn btn-primary">新建分类</button>
+            </div>
+            
+            <div id="categoriesList">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+
+        <!-- 标签管理 -->
+        <div id="tagsSection" class="admin-content" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>标签管理</h2>
+                <button onclick="showCreateTagForm()" class="btn btn-primary">新建标签</button>
+            </div>
+            
+            <div id="tagsList">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+
+        <!-- 创建/编辑文章表单 -->
+        <div id="articleFormSection" class="admin-content" style="display:none;">
+            <h2 id="articleFormTitle">新建文章</h2>
+            <form id="articleForm" onsubmit="saveArticle(event)">
+                <div class="form-group">
+                    <label for="articleTitle" class="form-label">文章标题</label>
+                    <input type="text" id="articleTitle" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="articleCategory" class="form-label">分类</label>
+                    <select id="articleCategory" class="form-control" required>
+                        <option value="">选择分类</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="articleTags" class="form-label">标签</label>
+                    <div id="articleTagsContainer">
+                        <!-- 标签复选框将在这里动态生成 -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="articleSummary" class="form-label">摘要</label>
+                    <textarea id="articleSummary" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="articleContent" class="form-label">内容（支持Markdown）</label>
+                    <textarea id="articleContent" class="form-control textarea" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="articlePublished"> 立即发布
+                    </label>
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" onclick="hideArticleForm()" class="btn btn-secondary">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查登录状态
+            if (!localStorage.getItem('token')) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // 加载文章列表
+            loadArticles();
+            loadCategories();
+            loadTags();
+        });
+    </script>
+</body>
+</html>
