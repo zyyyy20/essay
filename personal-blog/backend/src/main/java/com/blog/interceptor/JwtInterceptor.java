@@ -20,6 +20,11 @@ public class JwtInterceptor implements HandlerInterceptor {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String uri = request.getRequestURI();
+        String method = request.getMethod();
+        if ("GET".equalsIgnoreCase(method) && uri.matches("/api/articles/\\d+")) {
+            return true;
+        }
         String token = request.getHeader("Authorization");
         
         if (token == null || !token.startsWith("Bearer ")) {

@@ -14,6 +14,7 @@
         <Spinner v-if="loadingComments" />
       </transition>
       <div v-for="c in comments" :key="c.id" class="card">
+        <div class="meta">{{ c.userName }} · {{ formatTime(c.createdAt) }}</div>
         <div>{{ c.content }}</div>
       </div>
       <div class="row">
@@ -37,6 +38,7 @@ const commentText = ref('')
 const loading = ref(false)
 const loadingComments = ref(false)
 const htmlContent = computed(() => (article.value?.content || '').replace(/\n/g, '<br/>'))
+function formatTime(t) { try { return new Date(t).toLocaleString() } catch { return t } }
 
 async function load() {
   loading.value = true

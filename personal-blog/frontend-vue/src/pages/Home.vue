@@ -25,7 +25,7 @@
         <div class="card">
           <h3>分类</h3>
           <ul>
-            <li v-for="c in categories" :key="c.id"><a href="#" @click.prevent="filterByCategory(c.id)">{{ c.name }}</a></li>
+            <li v-for="c in categories" :key="c.id"><a class="category-link" href="#" @click.prevent="filterByCategory(c.id)">{{ c.name }}</a></li>
           </ul>
         </div>
         <div class="card">
